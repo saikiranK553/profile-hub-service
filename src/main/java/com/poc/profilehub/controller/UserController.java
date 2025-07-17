@@ -1,5 +1,8 @@
 package com.poc.profilehub.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -59,9 +62,14 @@ public class UserController {
 	//@DeleteMapping("/{id}")
 	@DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<Map<String, String>> deleteUser(@PathVariable Long id) {
 	    String message = userService.deleteUserById(id);
-	    return ResponseEntity.ok(message);  // HTTP 200 OK with message in body
+	    //return ResponseEntity.ok(message);  // HTTP 200 OK with message in body
+	    Map<String, String> response = new HashMap<>();
+	    response.put("message", message);
+	    response.put("success", "true");
+	    return ResponseEntity.ok(response);
+
 	}
 	
 	//@GetMapping("/auth")

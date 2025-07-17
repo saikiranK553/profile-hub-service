@@ -14,6 +14,7 @@ import com.poc.profilehub.dto.UserResponseDto;
 import com.poc.profilehub.exception.UserAlreadyExistsException;
 import com.poc.profilehub.exception.UserNotFoundException;
 import com.poc.profilehub.mapper.UserMapper;
+import com.poc.profilehub.model.Role;
 import com.poc.profilehub.model.User;
 import com.poc.profilehub.repository.UserRepository;
 @Service
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService{
 	    }
 		User user = userMapper.toEntity(registerUserDto);
 		user.setPassword(bCryptPasswordEncoder.encode(registerUserDto.getPassword()));
+		user.setRole(Role.USER);
 		user.setCreatedAt(LocalDateTime.now()); 
 		User savedUser = userRepository.save(user);
 		return userMapper.toResponseDto(savedUser);
