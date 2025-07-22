@@ -23,16 +23,8 @@ public class AppConfig {
         http
             .csrf(c -> c.disable())
             .authorizeHttpRequests(authz -> authz
-                // Public endpoints
                 .requestMatchers("/api/health", "/api/status","/api/users/auth","/api/users/register").permitAll()
-                
-                // User endpoints - both USER and ADMIN can access
-             //   .requestMatchers("/api/users/view/**", "/api/users/update").hasAnyRole("USER", "ADMIN")
-                
-                // Admin-only endpoints
                 .requestMatchers("/api/users/admin/**", "/api/users/delete/**").hasRole("ADMIN")
-                
-                // All other endpoints require authentication
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

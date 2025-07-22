@@ -45,7 +45,6 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        // You can customize the message here or parse ex.getMessage() if needed
         String message = "Data integrity violation: possibly duplicate key or constraint violation";
 
         ErrorResponse errorResponse = new ErrorResponse(

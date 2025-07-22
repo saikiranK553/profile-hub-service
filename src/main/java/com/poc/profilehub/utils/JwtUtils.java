@@ -23,7 +23,7 @@ public class JwtUtils {
 	@Value("${jwt.secret:YourSuperSecretKeyThatShouldBeLongEnough12345}")
     private String secretKey;
 
-    @Value("${jwt.expiration:86400000}") // 24 hours in milliseconds
+    @Value("${jwt.expiration:86400000}")
     private long jwtExpirationMs;
 
     private SecretKey getSigningKey() {
