@@ -71,7 +71,17 @@ public class UserServiceImpl implements UserService{
 	        .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
 	    return userMapper.toUserAuthDto(user);
 	}
-
+	
+	
+	public String updateUserRole(Long userId, Role newRole) {
+	    User user = userRepository.findById(userId)
+	        .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+	    
+	    user.setRole(newRole);
+	    userRepository.save(user);
+	    
+	    return "Successfully role updated";
+	}
 
 
 
