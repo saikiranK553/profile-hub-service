@@ -27,108 +27,23 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	
 	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
-	
-//	@Autowired
-//    private JwtUtils jwtUtil;
-//	
-//	@Autowired
-//	private ObjectMapper objectMapper;
-//
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-//            FilterChain filterChain) throws ServletException, IOException {
-//
-//        final String authHeader = request.getHeader("Authorization");
-//        final String jwt;
-//        final String userEmail;
-//        
-//        
-//        
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            System.out.println("No Bearer token found - skipping JWT processing");
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-//
-//        jwt = authHeader.substring(7);
-//        System.out.println("JWT Token extracted (first 50 chars): " + jwt.substring(0, Math.min(50, jwt.length())) + "...");
-//
-//        try {
-//            userEmail = jwtUtil.extractEmail(jwt);
-//
-//            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//
-//                boolean isTokenValid = jwtUtil.isTokenValid(jwt, userEmail);
-//
-//                if (isTokenValid) {
-//                    
-//                    Role role = jwtUtil.extractRole(jwt);
-//                    
-//                    Long userId = jwtUtil.extractUserId(jwt);
-//
-//                    List<GrantedAuthority> authorities = new ArrayList<>();
-//                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-//
-//                    UserPrincipal userPrincipal = new UserPrincipal(userEmail, userId, role);
-//
-//                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-//                            userPrincipal, null, authorities
-//                    );
-//                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                    SecurityContextHolder.getContext().setAuthentication(authToken);
-//                    
-//                    
-//                } else {
-//                    System.out.println("Token is INVALID");
-//                }
-//            } else {
-//                System.out.println(" FAILED: Email is null (" + userEmail + ") or authentication already exists (" + SecurityContextHolder.getContext().getAuthentication() + ")");
-//            }
-//        } 
-//        catch (ExpiredJwtException e) {
-//            System.out.println("JWT TOKEN EXPIRED: " + e.getMessage());
-//            handleJwtException(response, HttpServletResponse.SC_UNAUTHORIZED, 
-//                              "JWT_EXPIRED", "JWT token has expired", request.getRequestURI());
-//            return;
-//        }catch (Exception e) {
-//            System.out.println("UNEXPECTED EXCEPTION in JWT processing: " + e.getMessage());
-//            e.printStackTrace();
-//            handleJwtException(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 
-//                              "JWT_PROCESSING_ERROR", "Error processing JWT token", request.getRequestURI());
-//            return;
-//        }
-//
-//
-//        System.out.println("=== JWT FILTER END ===");
-//        filterChain.doFilter(request, response);
-//    }
-//    private void handleJwtException(HttpServletResponse response, int status, String error, String message, String path) {
-//        try {
-//            ErrorResponse errorResponse = new ErrorResponse(status, error, message, path);
-//            
-//            response.setStatus(status);
-//            response.setContentType("application/json");
-//            response.setCharacterEncoding("UTF-8");
-//            
-//            String jsonResponse = objectMapper.writeValueAsString(errorResponse);
-//            response.getWriter().write(jsonResponse);
-//        } catch (IOException e) {
-//            System.out.println("Error writing JWT exception response: " + e.getMessage());
-//        }
-//    }
 	
 	@Autowired
     private JwtUtils jwtUtil;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
-
+	
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
